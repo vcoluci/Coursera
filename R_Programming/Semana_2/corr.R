@@ -12,7 +12,6 @@ corr <- function (directory, threshold = 0, logar = "FALSE") {
    current <- universo[i,]
    linhas_completas <- current[2]
    if (linhas_completas > threshold) {
-     #le o arquivo
      if (logar) {
        cat("Lendo o arquivo:", current[1]$id, "\n")
      }
