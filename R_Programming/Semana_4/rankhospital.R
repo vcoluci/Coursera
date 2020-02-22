@@ -21,6 +21,18 @@ rankhospital <- function(state, outcome, num = "best") {
   colnames(fd) <- c("hospital", "state", "heart attack", "heart failure", "pneumonia")
   
   estado_corrente <- fd[fd$state == state, ]
+  
+  if (outcome == "heart attack") {
+    estado_corrente$`heart attack` <- as.numeric(as.character(estado_corrente$`heart attack`))
+  } else {
+    if (outcome == "heart failure") {
+      estado_corrente$`heart failure` <- as.numeric(as.character(estado_corrente$`heart failure`))
+    } else {
+      estado_corrente$pneumonia <- as.numeric(as.character(estado_corrente$pneumonia))
+    }
+  }
+  
+  estado_corrente <- estado_corrente[!is.na(estado_corrente[outcome]), ]
   if (is.numeric(num)) {
     if (length(estado_corrente) < num) {
       return(NA)
@@ -29,15 +41,11 @@ rankhospital <- function(state, outcome, num = "best") {
     if (num == "best") {
       num <- 1
     } else {
-      num <- length(estado_corrente)
+      num <- nrow(estado_corrente)
     }
   }
   
-  hospitais_com_dados <- estado_corrente[estado_corrente[outcome] != "Not Available",]
-  #aqui aqui: erro na ordenacao as.double
-  hospitais_ordenados <- hospitais_com_dados[order(as.double(hospitais_com_dados[outcome])), ]
-  hospitais_ordenados2 <- estado_corrente[order(as.double(estado_corrente[outcome]),na.last = TRUE), ]
-  
+  hospitais_ordenados <- estado_corrente[order(estado_corrente[outcome], estado_corrente$hospital ), ]
   output  <- hospitais_ordenados[num, "hospital"]
   return(output)
   
