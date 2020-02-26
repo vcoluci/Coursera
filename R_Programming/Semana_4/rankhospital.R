@@ -34,7 +34,7 @@ rankhospital <- function(state, outcome, num = "best") {
   
   estado_corrente <- estado_corrente[!is.na(estado_corrente[outcome]), ]
   if (is.numeric(num)) {
-    if (length(estado_corrente) < num) {
+    if (nrow(estado_corrente) < num) {
       return(NA)
     } 
   } else {
