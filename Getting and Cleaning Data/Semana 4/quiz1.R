@@ -1,3 +1,3 @@
 quiz1 <- function(){
-  cat("Lorem Ipsum")
+  cat("Lorem Ipsum") #bla bla bla
 }
