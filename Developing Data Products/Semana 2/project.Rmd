@@ -1,0 +1,30 @@
+---
+title: "População Capitais Brasil"
+author: "Valmir R. Coluci"
+date: "4/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(leaflet)
+```
+
+## R Markdown
+
+
+```{r capitais}
+df <- read.csv("capitais.csv")
+```
+
+
+```{r pressure, echo=FALSE}
+df %>% leaflet() %>%
+  addTiles() %>%
+  addMarkers(
+    lat = df$lat, 
+    lng = df$long, 
+    popup = paste(df$popup, "<br>", "Population:", df$population),
+    clusterOptions = markerClusterOptions()) %>%
+  addCircleMarkers(radius = sqrt(df$population/10e3))
+```
+
